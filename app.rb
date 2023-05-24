@@ -1,13 +1,12 @@
 require_relative 'lib/database_connection'
+require_relative 'lib/recipe_repository'
 
 # We need to give the database name to the method `connect`.
-DatabaseConnection.connect('music_library')
+DatabaseConnection.connect('recipes_directory_test')
 
-# Perform a SQL query on the database and get the result set.
-sql = 'SELECT id, title FROM albums;'
-result = DatabaseConnection.exec_params(sql, [])
+recipes_repo = RecipeRepository.new
 
 # Print out each record from the result set .
-result.each do |record|
-  p record
+recipes_repo.all.each_with_index do |recipe, index|
+  puts "#{index + 1} - #{recipe.name} - #{recipe.average_time} - #{recipe.rating}"
 end
